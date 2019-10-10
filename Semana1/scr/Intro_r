@@ -1,0 +1,83 @@
+Silvia Daniela Toloza Sandoval . 01/10/2019
+
+*Ejer:** Reasigne 5 a la letra *z*, usando el operador *<-*, ahora, pregunte Â¿quÃ© es *z*?
+
+
+z <- 5 
+z 
+
+
+```
+**Ejer:** Revisemos quÃ© es rnorm(1). Empecemos buscando la funciÃ³n en help o ?rnorm
+
+?rnorm
+
+rnorm (1)
+
+
+
+
+**Ejer:** multiplique *x* por 2 y sumele 1 y dividalo por 1.5, ese resultado elevelo al cuadrado. Esto se escribe igual que en una calculadora manual.
+
+x <- 1:10
+
+valor de x <- (x*2) + 1 )/ (1.5)
+
+Cuadrado <- Valor_de_x^2
+
+
+
+**Ejer:** tome cualquier objeto anterior y preguntele la clase
+
+class (enteros) 
+
+**Ejer:** Â¿QuÃ© clase tiene el vector?
+prueba <- c(1, "perro", FALSE, "gato", 1.5)
+class(prueba)
+
+
+
+**Ejer:** Hasta el momento hemnos generado varios vectores/objetos/variables, podemos listarlas usando la funciÃ³n ls() o ls.str(), la cual nos permite, no solo ver las variables, sino el tipo de cada una.
+
+ls()
+ls.str
+
+
+
+**Ejer:** Cree un una secuencia que repita los nÃºmeros de 1 a 4, 3 veces y asignela a un objeto llamado vector1. Ahora, cree una secuencia de nÃºmeros pares del 2 al 24 y asignela a un objeto llamado vector2. Gnere un arreglo con ambos vectores y busque la columna 2, fila 1 de la segunda matriz y para la primera.
+
+vector1 <- rep(1:3, 3)
+
+vector2 <- seq (2, 24, 2)
+
+arreglo <-array(data = c(vector1,vector2),dim = c(3,4,2))
+
+arreglo [1,2,2]
+
+
+
+**Ejer:**  tome la primera columna  y la segunda, concatenelas con c() Â¿QuÃ© encuentra?
+Ahora, tome amabas columnas y use la funcion cbind(), asignelo a un objeto llamado minuevatabla.
+Haga lo mismo, con las filas del 1:5 y del 10:30, use primero c() y luego rbind() Â¿QuÃ© encuentra? 
+\
+
+data (iris)
+
+c(iris$Sepal.Length, iris$Sepal.Width)
+
+nueva_tabla <- cbind(iris$Sepal.Length, iris$Sepal.Width)
+
+c(iris[1:5,], iris[10:30,])
+
+Nueva <- rbind(iris[1:5,], iris[10:30,])
+
+
+Busque el archivo suministrado por el profesor, carguelo a R y revise quÃ© contien. Extraiga las 5 primeras columnas con las 10 primeras filas, escriba esa nueva matriz como csv en su computador.
+
+pitones <- read.csv("c:/Users/Silvia Toloza/Documents/Clases/R.csv")
+
+Colrow <- pitones[1:10,1:5]
+Colrow
+
+write.csv(x = colrow,file = 'Minimatriz.csv')
+
