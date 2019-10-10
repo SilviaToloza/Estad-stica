@@ -1,0 +1,103 @@
+#**Ejer:**  Â¿Que clase de objeto es BIC? Â¿QuÃ© clase de objeto es geospiza? use la funciÃ³n *str* para obtener informaciÃ³n sobre la estructura.
+
+class(BIC)
+class (geospiza)
+str(geospiza)
+
+#**Ejer:** Â¿QuÃ© tipo de variable es tarsusL y quÃ© clase? 
+#Abra el objeto *tortues* y mire Â¿QuÃ© tipo de variables tiene y quÃ© clase son?, haga lo mismo con el objeto *mite.env* y revise Â¿QuÃ© tipo de variable es *shurb* y quÃ© clase es? Recuerde simepre usar help para saber de donde vienen los datos.
+
+
+data("tortues")
+str(tortues)
+class(tortues)
+
+#Tortues tiene tres variables cuantitavivas discontinuas y una variable cualitativa nominal# 
+
+data("mite.env")
+str(mite.env)
+class(mite.env)
+
+#Mite.env tiene dos variables cuantitativas continuas, tres categoricas: Scrub es ordinal y las otras dos es nomina. #
+
+
+#**Ejer:** usando el data.frame *tortues* calcule la proporciÃ³n de hembras y machos de la muestra
+
+#obtenemos las variables designadas a cada sexo 
+
+levels(tortues$sexe)
+
+#Cuánto hay de cada variable la columna de sexo
+M <- length(which(tortues$sexe == 'M'))
+F <- length(which(tortues$sexe == 'F'))
+
+#dividimos los dos resultados
+
+paste(F,'/',M,sep = '')
+
+ 
+
+
+#**Ejer:** usando el data.frame *tortues* calcule la proporciÃ³n entre el ancho y el largo del caparazÃ³n, genere una tabla con la informaciÃ³n de *tortues* y la nueva variable derivada.
+
+#primera tabla con las dos columnas del dataframe tortues
+Tabla1 <- cbind(tortues$long, tortues$larg)
+
+# se le asigna un nuevo nombre a cada columna
+
+colnames(Tabla1) <- c ( "ancho", "largo")
+
+# se calcula la proporción 
+
+prp <- Tabla1[,1]/ Tabla1 [,2]
+
+#se crea una nueva tabla con los valores obtenidos
+Tabla_tortuga <- cbind.data.frame(Tabla1, prp)
+Tabla_tortuga
+
+
+#**Ejer:** Â¿CÃ³mo luce el gÅfico de frecuencias para los tipos de hÃ¡bitat del gÃ©nero *Corvus*?
+
+#Como las variables son cualitativas solo representan un único "valor"; por lo que en x no se presentan rangos ni intervalos#
+
+#Pero si las variables son cuantitativas, los valores deben ser dispuestos en rangos que permitan observar el comportamiento de las frecuencias.
+
+#Primero, debemos generar una tabla de frecuencias
+
+
+#**Ejer:** encuentre el mÃ¡ximo, asÃ­ como lo hizo para el mÃ­nimo
+
+max(xsp)
+
+which.max(xsp)
+
+
+**Ejer:**  Repita el ejercicio para las variables continuas de tamaÃ±o de pico y tamaÃ±o del ala en el gÃ©nero *Corvus*. Busque cÃ³mo cambiar colores, ejes y algunas propiedades que le permitan mejorar el diseÃ±o del histograma.
+
+#Variable tamaño del ala
+
+range(corvus$wing)
+rangos<- seq(225, 480, 25)
+cajas<- cut(corvus$wing, rangos)
+freq_wing <- table(cajas)
+transform(freq_wing)
+hist(corvus$wing, breaks = rangos, main = "Tamaño del ala", col= rainbow(10), xlab = "Alas")
+
+#Variable tamaño del pico
+
+range(corvus$bill)
+rangos_2<- seq(225, 480, 25)
+cajas_2<- cut(corvus$wing, rangos)
+freq_bill <- table(cajas)
+transform(freq_bill)
+hist(corvus$wing, breaks = rangos_2, main = "Tamaño del pico", col= terrain.colors(10), xlab = "Picos")
+
+#Invente unos datos de medidas, como se hizo en el caso de los crÃ¡neos, y genere todo el ejercicio hasta el histograma. Busque otro tipo de distribuciones para generar las variables [ejemplo][3]. Busque en quÃ© casos sirve cada distribuciÃ³n o para quÃ© se usan.
+
+Ancho <- rnorm(n =20, mean= 17, sd= 2)
+Largo <- rnorm(n=20, mean =22, sd=1 )
+area <- cbind(Ancho, Largo)
+Valor <- Ancho*Largo 
+Tabla_valores <- cbind.data.frame(Ancho, Largo, Valor)
+rangox <- seq(250, 500, 50)
+hist(Tabla_valores$Valor, breaks = rangox, main = "Área de las puertas", xlab = "área", col= "coral")
