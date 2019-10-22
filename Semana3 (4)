@@ -116,35 +116,38 @@ pop2 <-abs(rnorm(200,mean = 6,sd = 5))
 pops<-cbind(pop1,pop2)
 pops
 
-#Gráfico de la población 1 con cajas
-rangospop1<- seq(3.5, 9.5, 2)
+#Gráfico de la población 1 
+rrangospop1<- seq(2, 9, 1)
 cajas<- cut(pop1, rangospop1)
-
-hist(pop1, breaks = rangospop1, main = "Población 1", col = "lightpink", xlab = "Longitud de colas")
-lines(density(pop1), col = "blue", lwd =2)
-
-#Gráfico sin cajas#
-
-par( mfrow=c(1,2), mar=c(4,4,1,0)) #dividir la pantalla en dos#
-hist(pop1, breaks=20 , xlim=c(3,10) , ylim = c(0, 20) , col= "lightpink" , xlab="Longitud de colas" , ylab="Frecuencia" , main="" )
-lines(density(pop1),lwd = 2,     col = "chocolate3") 
+ 
+hist(pop1, breaks = rangospop1, main = "Población 1", col = "lightpink", xlab = "Longitud de colas", ylim = c(0.0, 0.4), prob = TRUE)
+ 
+ lines(density(pop1), col = "blue", lwd =2)
 
 abline(v = mean(pop1),col = "lavenderblush4",lwd = 2)
 
 abline(v = median(pop1), col = "lightsalmon", lwd = 2)
 
-abline(v = 5,8 , col = "red", lwd =2 ) 
+abline(v = 6.5  , col = "red", lwd =2 ) #la moda se calculo sacando un promedio entre los dos valores más grandes
 
-legend(x = "topright",c("Density plot", "Mean", "Median", "Moda"),
-col = c("chocolate3", "lavenderblush4", "lightsalmon", "lightpink4"), lwd = c(2, 2, 2,2))
-hist(pop2, col= "lightblue1" , xlab="Longitud de colas" , ylab="" , main="")
+legend(x = "topright",
+       c("Density plot", "Mean", "Median", "Moda"),
+       col = c("chocolate3", "lavenderblush4", "lightsalmon", "lightpink4"), lwd = c(2, 2, 2,2))
+
+#Gráfica para la población 2 
+
+rangospop2<- seq(0.0, 21, 3)
+cajas<- cut(pop2, rangospop2)
+
+hist(pop2, breaks = rangospop2, main = "Población 2", col = "lightblue", xlab = "Longitud de colas", ylim = c(0.0, 0.1), prob = TRUE)
 lines(density(pop2),lwd = 2,     col = "chocolate3", breaks=20) 
+
 
 abline(v = mean(pop2),col = "lavenderblush4",lwd = 2)
 
 abline(v = median(pop2), col = "lightsalmon", lwd = 2)
 
-abline(v = 5 , col = "red", lwd =2 ) 
+abline(v = 4.5 , col = "red", lwd =2 ) 
 
 legend(x = "topright",
        c("Density plot", "Mean", "Median", "Moda"),
