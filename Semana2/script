@@ -1,0 +1,109 @@
+#**Ejer:**  ¿Qué clase de objeto es BIC? ¿Qué clase de objeto es geospiza? use la función *str* para obtener información sobre la estructura.
+
+class(BIC)
+class (geospiza)
+str(geospiza)
+
+#**Ejer:** ¿Qué tipo de variable es tarsusL y qué clase? 
+#Abra el objeto *tortues* y mire ¿Qué tipo de variables tiene y quéclase son?, haga lo mismo con el objeto *mite.env* y revise ¿Qué tipo de variable es *shurb* y quÃ© clase es? Recuerde simepre usar help para saber de donde vienen los datos.
+
+
+data("tortues")
+str(tortues)
+class(tortues)
+
+#Tortues tiene tres variables de tipo cuantitavivas discontinuas y de clase númeric y una variable cualitativa nominal de clase factor.
+
+data("mite.env")
+str(mite.env)
+class(mite.env)
+
+#Mite.env tiene dos variables cuantitativas continuas y de clase numeric
+#tres categóricas y de clase factor: Scrub es ordinal y las otras dos son nominales. 
+
+
+#**Ejer:** usando el data.frame *tortues* calcule la proporción de hembras y machos de la muestra
+
+#obtenemos las variables designadas a cada sexo 
+
+levels(tortues$sexe)
+
+#Cuánto hay de cada variable la columna de sexo
+
+M <- length(which(tortues$sexe == 'M'))
+F <- length(which(tortues$sexe == 'F'))
+
+#dividimos los dos resultados
+
+paste(F,'/',M,sep = '')
+ 
+#**Ejer:** usando el data.frame *tortues* calcule la proporción entre el ancho y el largo del caparazón, genere una tabla con la informaciÃ³n de *tortues* y la nueva variable derivada.
+
+#primera tabla con las dos columnas del dataframe tortues
+
+Caparazón<- cbind(tortues$long, tortues$larg)
+
+# se le asigna un nuevo nombre a cada columna
+
+colnames(Caparazón) <- c ( "ancho", "largo")
+
+# se calcula la proporción 
+
+prp <- Caparazón[,1]/ Caparazón[,2]
+
+#se crea una nueva tabla con los valores obtenidos
+Tabla_caparazones<- cbind.data.frame(Caparazón, prp)
+Tabla_caparazones
+
+#Ejer:¿Cuántas especies de *Corvus* fueron muestreadas en la región Paleártica-Africana?
+#Use el data.frame del género *Corvus*.¿Qué porcentaje de *Corvus*muestreados habitan zonas abiertaS?
+
+#Cantidad de especies muestradas en la región Paleártica Africana
+Pafricana <- length(which(corvus$phylog == "pale"))
+
+#Porcentaje 
+
+Abierta <- table(corvus$habitat) #Frecuencias de cada uno de los hábitats
+prop.table(Abierta) #Valor en porcentaje
+
+
+#**Ejer:** ¿Cómo luce el gráfico de frecuencias para los tipos de hábitat del género *Corvus*?
+
+#Como las variables son cualitativas solo representan un único "valor"; por lo que en x no se muestran rangos ni intervalos
+
+#**Ejer:** encuentre el máximo, así como lo hizo para el mÃ­nimo
+
+xsp <-apply(atlas$birds,2,sum)
+
+max(xsp)
+
+which.max(xsp)
+
+**Ejer:**  Repita el ejercicio para las variables continuas de tamaño de pico y tamaño del ala en el género *Corvus*. Busque cómo cambiar colores, ejes y algunas propiedades que le permitan mejorar el diseÃ±o del histograma.
+
+#Variable tamaño del ala
+
+range(corvus$bill)
+r <- seq(35, 90, 5)
+
+hist(corvus$bill, breaks = r, xlab = "Longitud en mm", col = "aquamarine2", 
+border = "black", main= "Tamaño del pico")
+
+
+#Variable tamaño del pico
+
+range(corvus$wing)
+W <- seq(200,500, 20)
+
+hist(corvus$wing, breaks = W, xlab = "Longitud en mm", col = "coral1", 
+border = "coral4", main= "Tamaño del ala", ylim = c(0,6))
+
+#Invente unos datos de medidas, como se hizo en el caso de los cráneos, y genere todo el ejercicio hasta el histograma. Busque otro tipo de distribuciones para generar las variables [ejemplo][3]. Busque en quÃ© casos sirve cada distribuciÃ³n o para quÃ© se usan.
+
+Ancho <- abs(rnorm(n =20, mean= 17, sd= 2))
+Largo <- abs(rnorm(n=20, mean =22, sd=1 ))
+Medidasx <- cbind(Ancho, Largo)
+Área<- Ancho*Largo 
+Tabla_valores <- cbind.data.frame(Ancho, Largo, Área)
+rangox <- seq(250, 500, 50)
+hist(Tabla_valores$Área, breaks = rangox, main = "Área de las puertas", xlab = "área", col= "coral")
