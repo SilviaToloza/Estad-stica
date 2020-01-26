@@ -1,0 +1,107 @@
+#*Ejer:* Tome cualquiera de las dos poblaciones y cambie los valores de
+#tamaño y número de muestras hasta que obtenga un histograma similar
+#a una distribución normal.
+
+taman.muestra <- 50
+
+
+Nmuestras <- 110
+Matriz.Muestras.pob1.sinMean <- matrix(NA, nrow = Nmuestras, ncol = taman.muestra)
+
+for (i in 1:Nmuestras){
+  muestra <- rexp(taman.muestra)
+  Matriz.Muestras.pob1.sinMean [i,]= muestra
+}
+
+meansX <- apply(Matriz.Muestras.pob1.sinMean, 2, mean)
+
+Matriz.Muestras.pob1.conMean <- cbind(Matriz.Muestras.pob1.sinMean,meansX)
+
+par(mfrow=c(2,2))
+hist(Matriz.Muestras.pob1.sinMean[1,], main = 'muestra 1')
+hist(Matriz.Muestras.pob1.sinMean[2,], main = 'muestra 2')
+hist(Matriz.Muestras.pob1.sinMean[3,], main = 'muestra 3')
+hist(Matriz.Muestras.pob1.conMean[,taman.muestra+1], main = 'medias')
+
+
+#*Ejer:*Simule una población con distribución normal de media 
+#15 y sd 1. ¿Cuál es el tamaño y número de muestral, dónde obtenemos
+#una distribución similar a la normal? Pruebe con Nmuestras 30 y tamaño 5 o 3, 
+#también podría reducir la SD.Haga lo mismo con una distribución lognormal.
+
+#Simlación con la función rnorm
+taman.muestra <- 25
+
+Nmuestras <- 110
+
+Matriz.Muestras.pob1.sinMean <- matrix(NA, nrow = Nmuestras, ncol = taman.muestra)
+
+for (i in 1:Nmuestras){
+  muestra <- rnorm(taman.muestra, 15, 1)
+  Matriz.Muestras.pob1.sinMean [i,]= muestra
+}
+
+meansX <- apply(Matriz.Muestras.pob1.sinMean, 2, mean)
+
+Matriz.Muestras.pob1.conMean <- cbind(Matriz.Muestras.pob1.sinMean,meansX)
+
+par(mfrow=c(2,2))
+hist(Matriz.Muestras.pob1.sinMean[1,], main = 'muestra 1')
+hist(Matriz.Muestras.pob1.sinMean[2,], main = 'muestra 2')
+hist(Matriz.Muestras.pob1.sinMean[3,], main = 'muestra 3')
+hist(Matriz.Muestras.pob1.conMean[,taman.muestra+1], main = 'medias')
+
+
+#Simulación con rlnorm
+
+
+taman.muestra <- 50
+Nmuestras <- 80
+
+Matriz.Muestras.pob1.sinMean <- matrix(NA, nrow = Nmuestras, ncol = taman.muestra)
+
+for (i in 1:Nmuestras){
+  muestra <- rlnorm(taman.muestra, 0, 1)
+  Matriz.Muestras.pob1.sinMean [i,]= muestra
+}
+
+meansX <- apply(Matriz.Muestras.pob1.sinMean, 2, mean)
+
+Matriz.Muestras.pob1.conMean <- cbind(Matriz.Muestras.pob1.sinMean,meansX)
+
+par(mfrow=c(2,2))
+hist(Matriz.Muestras.pob1.sinMean[1,], main = 'muestra 1')
+hist(Matriz.Muestras.pob1.sinMean[2,], main = 'muestra 2')
+hist(Matriz.Muestras.pob1.sinMean[3,], main = 'muestra 3')
+hist(Matriz.Muestras.pob1.conMean[,taman.muestra+1], main = 'medias')
+
+#*Ejer:* Aumente la SD= 10 y disminuya el número de individuos de la población,
+#ejemplo 1000. ¿Cuanto es el mínimo de muestras a tomar,para que la media obtenida
+#se acerque a la media de la población?
+
+simula<-abs(rnorm(1000,10,5))
+
+head(simula)
+
+# Media poblacional real
+Xpob <- mean(simula)
+
+Xpob
+
+# NÃºmero de muestras
+muestreo <- c(3,5,10,15,20,25,30,50,60,100,200,700,1000)
+
+means<-NULL
+
+for(i in 1:length(muestreo)){
+  muestra<-sample(simula,muestreo[i],replace = F)
+  means<-c(means,mean(muestra))
+}
+
+plot(cbind(muestreo,means),type = "l")
+abline(h = Xpob,col="red")
+
+#Si cambiamos el número de muestras a 1000 y el valor de la sd a 
+#5, el gráfico nos muestra que después de a aproximadamente 200 
+#muestras, la media obtenida se acerca a la de la población. 
+
