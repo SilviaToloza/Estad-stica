@@ -1,18 +1,17 @@
-**Ejer:** Â¿CÃºal es la probabilidad de que 3 sean de fenotipo blanco?
+#**Ejer:** ¿Cuál es la probabilidad de que 3 sean de fenotipo blanco?
   
   
   pbinom(3,8, 0.25)
 
-**Ejer:** ¿Cuál es la probabilidad de encontrar 6 semillas por bloque?, si el terreno es mÃ¡s pequeÃ±o (2x2m) y el promedio de semillas por bloque es de 10
-Grafique todos los eventos de 0 a 50
+#**Ejer:** ¿Cuál es la probabilidad de encontrar 6 semillas por bloque?, si el terreno es más pequeño (2x2m) y el promedio de semillas
+#por bloque es de 10 Grafique todos los eventos de 0 a 50
 
-dpois(x = 6,lambda = 10)
+dpois(x = 6, lambda = 10)
 
 plot(dpois ( 0:50, 10))
 
-**Ejer:** A partir del tortues del paquete ade4, calcule el promedio y la
-desviaciÃ³n estÃ¡ndar de las alturas de caparazones de las tortugas.
-Haga el anÃ¡lisis por sexo y grafÃ­quelo.
+#**Ejer:** A partir del tortues del paquete ade4, calcule el promedio y la desviación estándar de las alturas de caparazones de las 
+#tortugas. Haga el análisis por sexo y grafíquelo.
 
 alturasHem <- tortues$haut[tortues$sexe == "F"]
 alturasMa <- tortues$haut[tortues$sexe == "M"]
@@ -32,12 +31,22 @@ boxplot(x, Main = "Alturas de cabarazones", col = c("slategray1", "slategray"))
 #en el caso de las hembras son menores a 60. Lo que explica las notorias diferencias
 #en la desviación estándar. 
 
-#función que me permite conocer el crecimiento poblacional en función del tiempo (h)#
+#**Ejer:** Lea el artículo sobre tipos de [crecimientos poblacionales][1] y escriba el 
+#código en R que mejor describa el ejemplo de las bacterias en crecimiento exponencial.
 
-horas<- 1:10 #creo un vector con horas#
-as.data.frame(horas)
 
-cantidad <- crecimiento(horas) #a cada una de las horas le aplico la función#
+#función que me permite conocer el crecimiento poblacional en función del tiempo (h)
+
+crecimiento <- function(x) {1000*exp(0.69*x)}
+
+#Donde 1000 es mi población inicial, exp representa al número euler, 0.69 el valor de la tasa de crecimiento y x el tiempo en horas. 
+
+ #creo un vector con la cantidad de horas 
+ 
+  horas<- 1:10
+  as.data.frame(horas)
+
+cantidad <- crecimiento(horas) #a cada una de las horas le aplico la función crecimiento 
 
 as.data.frame(cantidad)
 
@@ -45,55 +54,49 @@ tab <- cbind(horas,cantidad) #creo una tabla con las dos variables#
 
 plot(tab, type= "l", main = "Crecimiento poblacional", col= "turquoise1", lwd = 2)
 
-*Ejer:** Simule 5000 peces de criadero en un tanque, todos son de la 
-misma cohorte. Imagine que los organiza en fila y quiere seleccionar 
-100 para calcular estadÃ­sticos de la poblaciÃ³n. Haga un muestreo 
-sistemÃ¡tico y calcule los estadÃ­sticos y descriptivos vistos 
-anteriormente. Grafique.
+#*Ejer:** Simule 5000 peces de criadero en un tanque, todos son de la misma cohorte. Imagine que los organiza en fila 
+#y quiere seleccionar 100 para calcular estadísticos de la población. Haga un muestreo sistemático y calcule los 
+#estadísticos y descriptivos vistos anteriormente. Grafique. 
 
 1: Ordenar mi lista de individuos (N)
 
 peces <- 1:5000
 
-2: Definir el tamaÃ±o de la muestra (n)
+2: Definir el tamaño de la muestra (n)
 
 n <- 100
 
-3: Dividir N/n eso me darÃ¡ el intervalo de muestreo (K)
+3: Dividir N/n eso me dará el intervalo de muestreo (K)
 
 k <- peces / n 
 
-4: Obtenemos un nÃºmero aleatorio desde 1 hasta k (1er)
+4: Obtenemos un número aleatorio desde 1 hasta k (1er)
 
 1er <- 10
 
 5: Iniciamos en 1er y tomamos cada k hasta completar n
 
 Longitud <- abs(rnorm(5000, 7, 2)) #creamos una variable medible
+
 población <- cbind(peces,Longitud) #una tabla que contenga las dos variables. 
-muestra <- población[seq(10, 5000, 50),] #de las 
-median((muestra[,2]))
+
+muestra <- población[seq(10, 5000, 50),] 
+
+#Cálculo de los estadísticos 
 
 mean(muestra[,2])
 
-mi.moda <- function(x){
-  
-  y <- table(x) 
-  
-  d <- y[which.max(y)] 
-  return(d)}
-
-mi.moda(muestra[,2])
+mode(muestra[,2])
 
 median(muestra[,2])
 
 #grafica
 
 range(muestra[,2])
-rangoP <- seq(1, 11.5, 1.5)
-c <-cut(muestra[,2],rangoP)
+rang <- seq(1, 11.5, 1.5)
 
-hist(muestra[,2], breaks = rangoP, prob = T, xlab = "Longitud", 
+
+hist(muestra[,2], breaks = rang, prob = T, xlab = "Longitud", 
 col = "wheat1", main = "Tamaño de aleta")
 
 lines(density(muestra [,2]), col = "gray0", lwd = 2)
