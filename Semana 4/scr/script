@@ -1,0 +1,212 @@
+#**Ejer:** Si la columna iris$Petal.Length tuviera valores 'NA', 
+#¿Cómo podrá eliminarlos antes de hacer la estimaciÃ³n de la media?
+  
+  mean(x, na.rm = TRUE)
+
+#Estime la media aritmética de la altura, la longitud y el ancho del caparazón de las tortugas 
+#pintadas [data(tortues), paquete: *ade4*],use la funciÃ³n apply para obtener los estadísticos 
+#de cada medida en un mismo vector.
+  
+  
+#Creo un vector que contiene solo las variables cuantitativas del dataframe tortues.
+  
+  medidas <- cbind(tortues$larg, tortues$long,tortues$haut)
+  
+#le aplico la función mean() al vector anteriormente creado. 
+  
+  media <- apply(medidas,2,mean)
+
+#**Ejer:** Genere una función propia que le permita encontrar la mediana, tal y como lo hizo con
+#la media aritmética.
+  
+  mi.mediana <- function(x) {
+    
+    y <- sort(x) #ordenar los valores de menor a mayor
+    n <- length(y) #buscar la longitud de este vector
+    e <- (n/2) 
+    d <- y[e] #encontrar el número que se encuentra en la posición n/2
+    return(d)
+  }
+
+#**Ejer:** Genere una función propia que le permita calcular la moda
+  
+  moda <- function(x){
+    
+    y <- table(x)
+    
+   m <-  x[which.max(y)]
+   
+   return(m)
+    
+      }
+  
+#**Ejer:** Después de generar la funciÃ³n del cÃ¡lculo de moda, grafíquela sobre el histograma.
+  
+  
+  hist(setosa, # histogram
+       col = "peachpuff", # column color
+       border = "black", 
+       prob = TRUE, # show densities instead of frequencies
+       xlim = c(0.5,2.5),
+       xlab = "Longitud de pétalo",
+       main = "Frecuencias de longitud de pétalo de setosa")
+  lines(density(setosa),
+        lwd = 2, # thickness of line
+        col = "chocolate3") # Generar la distribuciÃ³n continua distribuciÃ³n de masa a partir de los datos observados
+  
+  # Graficar la media
+  abline(v = mean(setosa),
+         col = "royalblue",
+         lwd = 2)
+  
+  abline(v = median(setosa),
+         col = "red",
+         lwd = 2)
+  
+  abline(v = moda(setosa),
+         col = "chartreuse1",
+         lwd = 2)
+  
+  
+  legend(x = 2, y = 2, # location of legend within plot area
+         c("Density plot", "Mean", "Median", "Mode"),
+         col = c("chocolate3", "royalblue", "red", "chartreuse1" ), 
+         lwd = c(2, 2, 2, 2))
+  
+#**Ejer:** Genere los cuantiles en intervalos de 0.5 Existen otras funciones que
+#nos permiten generar cuartiles, incluyendo información de tendencias centrales. 
+#Es decir, *density()* pero más resumido.
+  
+  quantile(setosa,probs = c(seq(0, 1, 0.5)))
+  
+  
+#¿Qué sucede si el número de columnas deseado no se especifica? Obtenga la mediana, 
+#la moda y los cuantiles para cada especie de iris y para cada variable morfométrica.
+  
+#Iris tiene una variable que es cualitativa,por lo que no se le puede calcular las medida. 
+  
+  #Para aplicar una operación sobre los niveles de una variable usamos aggregate()
+  aggregate(iris[,1:4], list(Especies = iris$Species), mean)
+  aggregate(iris[,1:4], list(Especies = iris$Species), mi.mediana)
+  aggregate(iris[,1:4], list(Especies = iris$Species), mi.moda)
+  aggregate(iris[,1:4], list(Especies = iris$Species), quantile)
+  
+  #para aplicar una operación a una variable cuantitativa, utilizamos apply()
+  apply(iris[,1:4],2, mean)
+  apply(iris[,1:4],2, mi.mediana)
+  apply(iris[,1:4],2, mi.moda)
+  apply(iris[,1:4],2, quantile)
+  
+  #**Ejer:** grafique la distribución de frecuencias de cada población usando histograma 
+  #y densidad en el mismo grÃ¡fico. Adiciones la media, la mediana y la moda.
+  
+  
+  set.seed(1)
+  
+  pop1 <-abs(rnorm(200,mean = 6,sd = 1))
+  
+  pop2 <-abs(rnorm(200,mean = 6,sd = 5))
+  
+  
+  pops<-cbind(pop1,pop2)
+  pops
+  
+  #Gráfico de la población 1 
+  rangospop1<- seq(2, 10, 1)
+
+  
+  hist(pop1, breaks = rangospop1, main = "Población 1", col = "lightpink", xlab = "Longitud de colas", ylim = c(0.0, 0.5), prob = TRUE)
+  
+  lines(density(pop1), col = "blue", lwd =2)
+  
+  abline(v = mean(pop1),col = "lavenderblush4",lwd = 2)
+  
+  abline(v = median(pop1), col = "lightsalmon", lwd = 2)
+  
+  abline(v = moda(pop1)  , col = "red", lwd =2 ) #la moda se calculo sacando un promedio entre los dos valores más grandes
+  
+  legend(x = 8, y= 0.5, c("Density plot", "Mean", "Median", "Moda"),
+         col = c("chocolate3", "lavenderblush4", "lightsalmon", "red"), lwd = c(2, 2, 2,2))
+
+  #Gráfica para la población 2 
+  
+  rangospop2<- seq(0.0, 21, 3)
+  cajas<- cut(pop2, rangospop2)
+  
+  hist(pop2, breaks = rangospop2, main = "Población 2", col = "lightblue", xlab = "Longitud de colas", ylim = c(0.0, 0.1), prob = TRUE)
+  lines(density(pop2),lwd = 2,     col = "chocolate3", breaks=20) 
+  
+  
+  abline(v = mean(pop2),col = "lavenderblush4",lwd = 2)
+  
+  abline(v = median(pop2), col = "lightsalmon", lwd = 2)
+  
+  abline(v = 4.5 , col = "red", lwd =2 ) 
+  
+  legend(x = "topright",
+         c("Density plot", "Mean", "Median", "Moda"),
+         col = c("chocolate3", "lavenderblush4", "lightsalmon", "red"), lwd = c(2, 2, 2,2))
+  
+  
+#**Ejer:** Lea el resumen y las grÃ¡ficas del articulo de Magund 2007.
+#Cargue los datos llamados '2007_EAA_Magud_et_al_data.csv' usando la función
+#read.csv(). Estime todos los estadísticos vistos en esta práctica
+#para las variables 'body length', 'tubercles 1b apart' y 'tarsus I 
+#length'.Grafique sus análisis y exportelos usando las funciones PNG
+#o PDF. Escriba un párrafo de no más de 200 analizando lo que encontró.. Tenga en cuenta que solo describir las salidas implica descripciÃ³n de resultados no anÃ¡lisis.
+  
+  getwd()
+  setwd("C:/Users/isabe/Downloads/Estadística 2020/20/")
+  Datos<-read.csv(file = "2007_EAA_Magud_et_al_data.csv", sep = ",", header = T)
+  Datos
+  x<-split(Datos, Datos$Traits)
+  
+  ## Análisis de la longitud del cuerpo en las cuatro localidades.
+  
+  I_BK <- x$`I BK`$A
+  II_IV<-x$`II IV`$A
+  I_IV<-x$`I IV`$A
+  II_Bk<-x$`II BK`$A
+  
+  library(psych)
+  
+  describe.by(I_BK)
+  describe.by(I_IV)
+  describe.by(II_Bk)
+  describe.by(II_IV)
+  
+  
+  A<- cbind(I_BK,II_Bk,I_IV,II_IV)
+  boxplot(A, names=c("I Bk","II Bk", "I IV", "II IV"), frame = FALSE, col= c("paleturquoise3", "paleturquoise4",
+  "palevioletred","palevioletred1"), xlab="Lugares muestreados", ylab="Longitud", main ="Logitud del cuerpo")
+  
+  ## Análisis de la separacción de los tuberculos 1b
+  I_BK2<- x$`I BK`$P
+  II_IV2<-x$`II IV`$P
+  I_IV2<-x$`I IV`$P
+  II_Bk2<-x$`II BK`$P
+  
+  
+  P<- cbind(I_BK2,II_Bk2,I_IV2,II_IV2)
+  boxplot(P, names=c("I Bk","II Bk", "I IV", "II IV"), frame = FALSE, col= c("palevioletred3", "palevioletred4",
+  "papayawhip","peachpuff"), xlab="Lugares muestreados", ylab="Longitud", ylim=c(8, 16),  main="Separación de los tubércuolos")
+  describe.by(I_BK2)
+  describe.by(I_IV2)
+  describe.by(II_Bk2)
+  describe.by(II_IV2)
+  
+  ## Análisis de la longitud del tarso 
+  
+  I_BK3<- x$`I BK`$W
+  II_IV3<-x$`II IV`$W
+  I_IV3<-x$`I IV`$W
+  II_Bk3<-x$`II BK`$W
+  
+  W<- cbind(I_BK3,II_Bk3,I_IV3,II_IV3)
+  boxplot(W, names=c("I Bk","II Bk", "I IV", "II IV"), frame = FALSE, col= c("palegreen3", "palegreen4",
+  "paleturquoise","paleturquoise1"), xlab="Lugares muestreados", ylab="Longitud",
+          main="Longitud del tarso")
+  describe.by(I_BK3)
+  describe.by(I_IV3)
+  describe.by(II_Bk3)
+  describe.by(II_IV3)
