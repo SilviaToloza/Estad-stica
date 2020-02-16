@@ -1,0 +1,100 @@
+set.seed(999)
+
+# Generar la poblaciÃ³n
+
+pop <- ceiling(rnorm(5000, mean = 35,sd = 1))
+
+
+# Tomar muestras en tres playas distintas
+m1 <- sample(x = pop,size = 10, replace = T)
+m2 <- sample(x = pop,size = 10, replace = T)
+m3 <- sample(x = pop,size = 10, replace = T)
+
+# Calcular media, desviaciÃ³n y error
+mean(m1)
+sd(m1)
+sd(m1)/sqrt(length(m1))
+
+mean(m2)
+sd(m2)
+sd(m2)/sqrt(length(m2))
+
+mean(m3)
+sd(m3)
+sd(m3)/sqrt(length(m3))
+
+boxplot(cbind(m1,m2,m3))
+
+# Error estandar 
+
+sd(c(m1,m2,m3))/sqrt(length(c(m1,m2,m3)))
+
+
+
+#*Ejer:* Aumente el valor de desviación estándar y evalúe cómo cambia el error estándar.
+
+#Si se aumenta el valor de la sd a 8, el erros estándar también lo hace casi en la misma proporción. 
+
+#sd(c(m1,m2,m3))/sqrt(length(c(m1,m2,m3)))
+#[1] 1.382651
+
+#*Ejer:* Aumente el tamaño de la muestra y evalúe cómo cambia el error estándar.
+
+#Aumentar el tamaño de la muestra ocasiona que el error estándar disminuya. 
+
+set.seed(999)
+
+# Generar la poblaciÃ³n
+
+pop <- c(ceiling(rnorm(3500, mean = 30,sd = 3)), ceiling(runif(500, 45,51)))
+
+myhist <- hist(pop)
+multiplier <- myhist$counts / myhist$density
+mydensity <- density(pop)
+mydensity$y <- mydensity$y * multiplier[1]
+
+plot(myhist)
+lines(mydensity)
+
+# Tomar muestras en tres playas distintas
+m1 <- sample(x = pop,size = 5, replace = T)
+m2 <- sample(x = pop,size = 5, replace = T)
+m3 <- sample(x = pop,size = 5, replace = T)
+
+# Calcular media, desviaciÃ³n y error
+mean(m1)
+sd(m1)
+sd(m1)/sqrt(length(m1))
+
+mean(m2)
+sd(m2)
+sd(m2)/sqrt(length(m2))
+
+mean(m3)
+sd(m3)
+sd(m3)/sqrt(length(m3))
+
+
+# Boxplot
+boxplot(cbind(m1,m2,m3))
+
+
+# Graficar las muestras tomadas
+muestras <- c(m1,m2,m3)
+
+myhist <- hist(muestras)
+multiplier <- myhist$counts / myhist$density
+mydensity <- density(muestras)
+mydensity$y <- mydensity$y * multiplier[1]
+
+plot(myhist)
+lines(mydensity)
+# Error estÃ¡ndar 
+
+sd(c(m1,m2,m3))/sqrt(length(c(m1,m2,m3)))
+
+
+#*Ejer:* Cambie el tamaño de muestra y evalúe el valor de error estándar. ¿Cuánto debería aumentar la muestra para
+#que el error estándar disminuya a la mitad?
+
+#Para disminuir el valor del error estándar a la mitad, es necesario aumentar el tamaño de la muestra, más o menos, a 20.
